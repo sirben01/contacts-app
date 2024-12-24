@@ -2,12 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ContactsService } from '../contacts/contacts.service';
+import { addressTypeValues, phoneTypeValues } from '../contacts/contact.model';
 
 @Component({
   templateUrl: './edit-contact.component.html',
   styleUrls: ['./edit-contact.component.css']
 })
 export class EditContactComponent implements OnInit {
+  phoneTypes = phoneTypeValues;
+  addressTypes = addressTypeValues;
   contactForm = this.fb.nonNullable.group({
     id: '',
     firstName: '',
@@ -27,8 +30,8 @@ export class EditContactComponent implements OnInit {
     }),
   });
 
-  constructor(private route: ActivatedRoute, 
-    private contactService:ContactsService, 
+  constructor(private route: ActivatedRoute,
+    private contactService:ContactsService,
     private router: Router,
     private fb: FormBuilder) { }
 
@@ -40,7 +43,7 @@ export class EditContactComponent implements OnInit {
     this.contactService.getContact(contactId).subscribe((contact) => {
       if (!contact) return;
       this.contactForm.setValue(contact);
-      
+
     });
   }
 
